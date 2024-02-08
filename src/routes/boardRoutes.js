@@ -16,7 +16,7 @@ router.get('/board/:id', getBoardById);
 router.post('/board', createBoard);
 router.put('/board/:id', updateBoardName);
 router.delete('/board/:id', deleteBoard);
-router.post('/card/:boardId/:cellId', createCard);
+router.post('/card/:boardId/:yearId/:monthId/:cellId', createCard);
 router.put('/card/:boardId/:cellId/:cardId', updateCard);
 router.patch('/card/:boardId/:cellId/:cardId/:toCellId/:toCardIndexId', dragAndDropCard);
 router.delete('/card/:boardId/:cellId/:cardId', deleteCard);

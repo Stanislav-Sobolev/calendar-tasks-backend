@@ -1,5 +1,6 @@
 var cryptoModule = require('crypto');
 var Board = require('../models/boardModel');
+var emptyTemplate = require('../models/emptyTemplate.json');
 
 const hashId = (id) => {
   const hash = cryptoModule.createHash('sha256');
@@ -70,20 +71,35 @@ exports.deleteBoard = async (req, res) => {
   
 exports.createCard = async (req, res) => {
   try {
-    const { boardId, cellId } = req.params;
+    const { boardId, yearId, monthId, cellId } = req.params;
     const board = await Board.findOne({ id: boardId });
+    
     if (!board) {
       return res.status(404).json({ message: `Cannot find any board with ID ${boardId}` });
     }
 
-    const cell = board.cellsData.find((col) => col.id === parseInt(cellId));
+    let year = board.cellsData.find((el) => el.id === parseInt(yearId));
+    
+    if (!year) {
+      const yearCreate = { ...emptyTemplate, id: parseInt(yearId)};
+      board.cellsData.push(yearCreate)
+      
+      year = board.cellsData.find((yearItem) => yearItem.id === parseInt(yearId));
+    }
+    
+    const month = year.months.find((monthItem) => monthItem.id === parseInt(monthId));
+    if (!month) {
+      return res.status(404).json({ message: `Cannot find any month with ID ${monthId}` });
+    }
+
+    const cell = month.cells.find((cellItem) => cellItem.id === parseInt(cellId));
     if (!cell) {
       return res.status(404).json({ message: `Cannot find any cell with ID ${cellId}` });
     }
 
     const card = { ...req.body };
     cell.items.push(card);
-
+    
     await board.save();
 
     res.status(200).json(card);
