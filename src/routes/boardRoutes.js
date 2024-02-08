@@ -18,7 +18,7 @@ router.put('/board/:id', updateBoardName);
 router.delete('/board/:id', deleteBoard);
 router.post('/card/:boardId/:cellId', createCard);
 router.put('/card/:boardId/:cellId/:cardId', updateCard);
-router.patch('/card/:boardId/:cellId/:cardId/:tocellId/:toCardIndexId', dragAndDropCard);
+router.patch('/card/:boardId/:cellId/:cardId/:toCellId/:toCardIndexId', dragAndDropCard);
 router.delete('/card/:boardId/:cellId/:cardId', deleteCard);
 
 module.exports = router;

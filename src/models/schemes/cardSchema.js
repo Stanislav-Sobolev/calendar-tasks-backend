@@ -14,10 +14,6 @@ var cardSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    calendarDate: {
-      type: Number,
-      required: true,
-    },
   },
   {
     timestamps: true,
