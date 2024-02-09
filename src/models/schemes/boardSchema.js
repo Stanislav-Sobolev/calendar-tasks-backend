@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var yearSchema = require('./yearSchema');
+var cellSchema = require('./cellSchema');
 
 var boardSchema = new mongoose.Schema(
   {
@@ -11,7 +11,7 @@ var boardSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please enter a board name'],
     },
-    cellsData: [yearSchema],
+    cellsData: [cellSchema],
   },
   {
     timestamps: true,

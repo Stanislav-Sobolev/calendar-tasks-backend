@@ -1,6 +1,6 @@
 var cryptoModule = require('crypto');
 var Board = require('../models/boardModel');
-var emptyTemplate = require('../models/emptyTemplate.json');
+var emptyCellTemplate = require('../models/emptyCellTemplate.json');
 
 const hashId = (id) => {
   const hash = cryptoModule.createHash('sha256');
@@ -27,30 +27,19 @@ exports.getBoardById = async (req, res) => {
   
 exports.createCard = async (req, res) => {
   try {
-    const { boardId, yearId, monthId, cellId } = req.params;
+    const { boardId, cellId } = req.params;
     const board = await Board.findOne({ id: boardId });
     
     if (!board) {
       return res.status(404).json({ message: `Cannot find any board with ID ${boardId}` });
     }
 
-    let year = board.cellsData.find((el) => el.id === parseInt(yearId));
-    
-    if (!year) {
-      const yearCreate = { ...emptyTemplate, id: parseInt(yearId)};
-      board.cellsData.push(yearCreate)
+    let cell = board.cellsData.find((cellItem) => cellItem.id === parseInt(cellId));
+    if (!cell) {      
+      const cellCreate = { ...emptyCellTemplate, id: parseInt(cellId)};
+      board.cellsData.push(cellCreate)
       
-      year = board.cellsData.find((yearItem) => yearItem.id === parseInt(yearId));
-    }
-    
-    const month = year.months.find((monthItem) => monthItem.id === parseInt(monthId));
-    if (!month) {
-      return res.status(404).json({ message: `Cannot find any month with ID ${monthId}` });
-    }
-
-    const cell = month.cells.find((cellItem) => cellItem.id === parseInt(cellId));
-    if (!cell) {
-      return res.status(404).json({ message: `Cannot find any cell with ID ${cellId}` });
+      cell = board.cellsData.find((cellItem) => cellItem.id === parseInt(cellId));
     }
 
     const card = { ...req.body };
@@ -68,25 +57,13 @@ exports.createCard = async (req, res) => {
   
 exports.updateCard = async (req, res) => {
   try {
-    const { boardId, yearId, monthId, cellId, cardId } = req.params;
+    const { boardId, cellId, cardId } = req.params;
     const board = await Board.findOne({ id: boardId });
     if (!board) {
       return res.status(404).json({ message: `Cannot find any board with ID ${boardId}` });
     }
 
-    const year = board.cellsData.find((el) => el.id === parseInt(yearId));
-    
-    if (!year) {
-      return res.status(404).json({ message: `Cannot find any year with ID ${yearId}` });
-    }
-    
-    const month = year.months.find((monthItem) => monthItem.id === parseInt(monthId));
-    
-    if (!month) {
-      return res.status(404).json({ message: `Cannot find any month with ID ${monthId}` });
-    }
-
-    const cell = month.cells.find((cellItem) => cellItem.id === parseInt(cellId));
+    const cell = board.cellsData.find((cellItem) => cellItem.id === parseInt(cellId));
     
     if (!cell) {
       return res.status(404).json({ message: `Cannot find any cell with ID ${cellId}` });
@@ -114,11 +91,8 @@ exports.dragAndDropCard = async (req, res) => {
   try {
     const {
       boardId,
-      yearId,
-      monthId,
       cellId,
       cardId,
-      toMonthId,
       toCellId,
       toCardIndexId,
     } = req.params;
@@ -127,24 +101,18 @@ exports.dragAndDropCard = async (req, res) => {
       return res.status(404).json({ message: `Cannot find any board with ID ${boardId}` });
     }
 
-    const year = board.cellsData.find((el) => el.id === parseInt(yearId));
-    
-    if (!year) {
-      return res.status(404).json({ message: `Cannot find any year with ID ${yearId}` });
-    }
-    
-    const month = year.months.find((monthItem) => monthItem.id === parseInt(monthId));
-    const toMonth = year.months.find((monthItem) => monthItem.id === parseInt(toMonthId));
-    
-    if (!month || !toMonth) {
-      return res.status(404).json({ message: `Cannot find any month with ID ${monthId} or ${toMonth}` });
+    const cellFrom = board.cellsData.find((col) => col.id === parseInt(cellId));
+    let cellTo = board.cellsData.find((col) => col.id === parseInt(toCellId));
+
+    if (!cellFrom) {
+      return res.status(404).json({ message: `Cannot find any cell with ID ${cellId}` });
     }
 
-    const cellFrom = month.cells.find((col) => col.id === parseInt(cellId));
-    const cellTo = toMonth.cells.find((col) => col.id === parseInt(toCellId));
-
-    if (!cellFrom || !cellTo) {
-      return res.status(404).json({ message: `Cannot find any cell with ID ${cellId} or ${cellTo}` });
+    if (!cellTo) {
+      const cellCreate = { ...emptyCellTemplate, id: parseInt(toCellId)};
+      board.cellsData.push(cellCreate)
+      
+      cellTo = board.cellsData.find((cellItem) => cellItem.id === parseInt(toCellId));
     }
 
     const cardIndex = cellFrom.items.findIndex((c) => c.id === parseInt(cardId));
@@ -168,25 +136,13 @@ exports.dragAndDropCard = async (req, res) => {
 
 exports.deleteCard = async (req, res) => {
   try {
-    const { boardId, yearId, monthId, cellId, cardId } = req.params;
+    const { boardId, cellId, cardId } = req.params;
     const board = await Board.findOne({ id: boardId });
     if (!board) {
       return res.status(404).json({ message: `Cannot find any board with ID ${boardId}` });
     }
 
-    const year = board.cellsData.find((el) => el.id === parseInt(yearId));
-    
-    if (!year) {
-      return res.status(404).json({ message: `Cannot find any year with ID ${yearId}` });
-    }
-    
-    const month = year.months.find((monthItem) => monthItem.id === parseInt(monthId));
-    
-    if (!month) {
-      return res.status(404).json({ message: `Cannot find any month with ID ${monthId}` });
-    }
-
-    const cell = month.cells.find((cellItem) => cellItem.id === parseInt(cellId));
+    const cell = board.cellsData.find((cellItem) => cellItem.id === parseInt(cellId));
     
     if (!cell) {
       return res.status(404).json({ message: `Cannot find any cell with ID ${cellId}` });

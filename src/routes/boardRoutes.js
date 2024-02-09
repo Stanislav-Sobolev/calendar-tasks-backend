@@ -13,9 +13,9 @@ const {
 const router = expressRouts.Router();
 
 router.get('/board/:id', getBoardById);
-router.post('/card/:boardId/:yearId/:monthId/:cellId', createCard);
-router.put('/card/:boardId/:yearId/:monthId/:cellId/:cardId', updateCard);
-router.patch('/card/:boardId/:yearId/:monthId/:cellId/:cardId/:toMonthId/:toCellId/:toCardIndexId', dragAndDropCard);
-router.delete('/card/:boardId/:yearId/:monthId/:cellId/:cardId', deleteCard);
+router.post('/card/:boardId/:cellId', createCard);
+router.put('/card/:boardId/:cellId/:cardId', updateCard);
+router.patch('/card/:boardId/:cellId/:cardId/:toCellId/:toCardIndexId', dragAndDropCard);
+router.delete('/card/:boardId/:cellId/:cardId', deleteCard);
 
 module.exports = router;
