@@ -14,6 +14,10 @@ var cardSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    colors: {
+      type: [String],
+      required: true,
+    },
   },
   {
     timestamps: true,
