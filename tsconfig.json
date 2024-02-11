@@ -12,6 +12,6 @@
     "strict": true,
     "esModuleInterop": true,
   },
-  "include": ["src/**/*.ts", "./api/*.ts"],
+  "include": ["src/**/*.ts", "./api/*.ts", "api/index.js"],
   "exclude": ["node_modules", "src/**/*.spec.ts"]
 }

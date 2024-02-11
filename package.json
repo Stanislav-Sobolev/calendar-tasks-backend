@@ -2,11 +2,11 @@
   "name": "express-tasks-calendar-api",
   "version": "1.0.0",
   "description": "Rest API using Node.js, Express",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon --watch src/**/*.ts --exec ts-node ./src/index.ts",
     "build": "tsc",
-    "start": "ts-node ./src/index.ts",
+    "start": "node ./dist/index.js",
     "lint": "eslint --fix --quiet src/**/*.js",
     "vercel-build": "echo hello"
   },
