@@ -1,0 +1,1 @@
+{"version":3,"file":"boardModel.js","sourceRoot":"","sources":["../../src/models/boardModel.ts"],"names":[],"mappings":";AACA,IAAI,QAAQ,GAAG,OAAO,CAAC,UAAU,CAAC,CAAC;AACnC,IAAI,WAAW,GAAG,OAAO,CAAC,uBAAuB,CAAC,CAAC;AAEnD,IAAI,KAAK,GAAG,QAAQ,CAAC,KAAK,CAAC,OAAO,EAAE,WAAW,CAAC,CAAC;AAEjD,MAAM,CAAC,OAAO,GAAG,KAAK,CAAC"}
