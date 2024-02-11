@@ -1,3 +1,3 @@
-var app = require('../src/app');
+var app = require('../dist/app');
 
 export default app;
