@@ -1,3 +1,3 @@
-import app from '../src/app';
+var app = require('../src/app');
 
 export default app;
