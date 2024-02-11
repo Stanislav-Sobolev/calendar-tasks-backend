@@ -17,6 +17,7 @@ var cardSchema = new mongoose.Schema(
     colors: {
       type: [String],
       required: true,
+      default: [],
     },
   },
   {
