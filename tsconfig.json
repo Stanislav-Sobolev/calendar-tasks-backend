@@ -6,7 +6,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "target": "es2021",
-    "outDir": "./dist",
+    "outDir": "./",
     "baseUrl": "./src",
     "experimentalDecorators": true,
     "strict": true,
