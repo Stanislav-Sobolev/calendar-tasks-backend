@@ -7,7 +7,8 @@
     "dev": "nodemon --watch src/**/*.ts --exec ts-node ./src/index.ts",
     "build": "tsc",
     "start": "node ./dist/index.js",
-    "lint": "eslint --fix --quiet src/**/*.js"
+    "lint": "eslint --fix --quiet src/**/*.js",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "9870102@gmail.com",
